@@ -1,0 +1,11 @@
+<%- include('../layout/header') %>
+<h1 class="h3 mb-3">Edit Member</h1>
+<form class="panel" method="post" action="/members/<%= member.id %>">
+  <%- include('form', { member }) %>
+  <div class="mt-4 d-flex gap-2">
+    <button class="btn btn-success">Update Member</button>
+    <button form="delete-member" class="btn btn-outline-danger">Delete</button>
+  </div>
+</form>
+<form id="delete-member" method="post" action="/members/<%= member.id %>/delete"></form>
+<%- include('../layout/footer') %>

@@ -1,0 +1,7 @@
+<%- include('../layout/header') %>
+<h1 class="h3 mb-3">Add Member</h1>
+<form class="panel" method="post" action="/members">
+  <%- include('form', { member }) %>
+  <div class="mt-4"><button class="btn btn-success">Save Member</button></div>
+</form>
+<%- include('../layout/footer') %>

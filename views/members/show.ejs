@@ -1,0 +1,19 @@
+<%- include('../layout/header') %>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h3 mb-0"><%= member.name %></h1>
+  <a href="/members/<%= member.id %>/edit" class="btn btn-outline-primary">Edit</a>
+</div>
+<div class="panel">
+  <dl class="row mb-0">
+    <dt class="col-sm-3">Mobile</dt><dd class="col-sm-9"><%= member.mobile %></dd>
+    <dt class="col-sm-3">Type</dt><dd class="col-sm-9"><%= member.member_type || 'manual' %></dd>
+    <dt class="col-sm-3">Email</dt><dd class="col-sm-9"><%= member.email || '-' %></dd>
+    <dt class="col-sm-3">Address</dt><dd class="col-sm-9"><%= member.address || '-' %></dd>
+    <dt class="col-sm-3">Donation</dt><dd class="col-sm-9"><%= member.donation_amount || '-' %> / <%= member.donation_frequency %></dd>
+    <dt class="col-sm-3">Next Donation Date</dt><dd class="col-sm-9"><%= member.next_reminder_date || '-' %></dd>
+    <dt class="col-sm-3">Notify Before</dt><dd class="col-sm-9"><%= member.reminder_days_before ?? 3 %> day(s)</dd>
+    <dt class="col-sm-3">WhatsApp</dt><dd class="col-sm-9"><%= member.whatsapp_subscribed ? 'Subscribed' : 'Not subscribed' %></dd>
+    <dt class="col-sm-3">Notes</dt><dd class="col-sm-9"><%= member.notes || '-' %></dd>
+  </dl>
+</div>
+<%- include('../layout/footer') %>

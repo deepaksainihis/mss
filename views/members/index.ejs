@@ -1,0 +1,28 @@
+<%- include('../layout/header') %>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h3 mb-0">Members</h1>
+  <a href="/members/create" class="btn btn-success">Add Member</a>
+</div>
+<div class="panel">
+  <div class="table-responsive">
+    <table class="table align-middle">
+      <thead><tr><th>Name</th><th>Mobile</th><th>Type</th><th>Amount</th><th>Next Donation</th><th>Notify Before</th><th>Status</th><th></th></tr></thead>
+      <tbody>
+      <% members.forEach(member => { %>
+        <tr>
+          <td><a href="/members/<%= member.id %>"><%= member.name %></a></td>
+          <td><%= member.mobile %></td>
+          <td><span class="badge text-bg-<%= member.member_type === 'subscribed' ? 'info' : 'secondary' %>"><%= member.member_type || 'manual' %></span></td>
+          <td><%= member.donation_amount || '-' %></td>
+          <td><%= member.next_reminder_date || '-' %></td>
+          <td><%= member.reminder_days_before ?? 3 %> day(s)</td>
+          <td><span class="badge text-bg-<%= member.is_active ? 'success' : 'secondary' %>"><%= member.is_active ? 'Active' : 'Inactive' %></span></td>
+          <td class="text-end"><a class="btn btn-sm btn-outline-primary" href="/members/<%= member.id %>/edit">Edit</a></td>
+        </tr>
+      <% }) %>
+      <% if (!members.length) { %><tr><td colspan="8" class="text-muted">No members found.</td></tr><% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<%- include('../layout/footer') %>

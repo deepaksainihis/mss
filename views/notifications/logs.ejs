@@ -1,0 +1,23 @@
+<%- include('../layout/header') %>
+<h1 class="h3 mb-3">Notification Logs</h1>
+<div class="panel">
+  <div class="table-responsive">
+    <table class="table align-middle">
+      <thead><tr><th>Member</th><th>Mobile</th><th>Status</th><th>Sent At</th><th>Message</th><th>Response</th></tr></thead>
+      <tbody>
+      <% logs.forEach(log => { %>
+        <tr>
+          <td><%= log.Member ? log.Member.name : '-' %></td>
+          <td><%= log.mobile %></td>
+          <td><span class="badge text-bg-<%= log.status === 'sent' ? 'success' : (log.status === 'failed' ? 'danger' : 'secondary') %>"><%= log.status %></span></td>
+          <td><%= log.sent_at ? log.sent_at.toLocaleString() : '-' %></td>
+          <td class="text-truncate" style="max-width: 260px;"><%= log.message %></td>
+          <td class="text-truncate" style="max-width: 220px;"><%= log.response || '-' %></td>
+        </tr>
+      <% }) %>
+      <% if (!logs.length) { %><tr><td colspan="6" class="text-muted">No logs yet.</td></tr><% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<%- include('../layout/footer') %>

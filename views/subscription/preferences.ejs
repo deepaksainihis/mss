@@ -1,0 +1,40 @@
+<%- include('../layout/header') %>
+<div class="public-wrap">
+  <form class="public-panel" method="post" action="/subscribe/preferences">
+    <h1 class="h4 mb-2">Notification Preferences</h1>
+    <div class="mb-3">
+      <label class="form-label">Name</label>
+      <input name="name" class="form-control" value="<%= member ? member.name : '' %>">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Donation Amount</label>
+      <input type="number" step="0.01" min="0" name="donation_amount" class="form-control" value="<%= member && member.donation_amount ? member.donation_amount : '' %>">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Donation Frequency</label>
+      <select name="donation_frequency" class="form-select">
+        <% ['monthly','quarterly','half_yearly','yearly','custom'].forEach(freq => { %>
+          <option value="<%= freq %>" <%= member && member.donation_frequency === freq ? 'selected' : '' %>><%= freq.replace('_', ' ') %></option>
+        <% }) %>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Donation Date</label>
+      <input type="date" name="next_reminder_date" class="form-control" value="<%= member && member.next_reminder_date ? member.next_reminder_date : '' %>">
+    </div>
+    <div class="form-check mb-2">
+      <input class="form-check-input" type="checkbox" name="reminder_enabled" value="1" checked>
+      <label class="form-check-label">Donation reminders</label>
+    </div>
+    <div class="form-check mb-2">
+      <input class="form-check-input" type="checkbox" name="festival_enabled" value="1" checked>
+      <label class="form-check-label">Festival messages</label>
+    </div>
+    <div class="form-check mb-4">
+      <input class="form-check-input" type="checkbox" name="general_enabled" value="1" checked>
+      <label class="form-check-label">General Gaushala updates</label>
+    </div>
+    <button class="btn btn-success w-100">Save Preferences</button>
+  </form>
+</div>
+<%- include('../layout/footer') %>

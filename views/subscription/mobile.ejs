@@ -1,0 +1,13 @@
+<%- include('../layout/header') %>
+<div class="public-wrap">
+  <form class="public-panel" method="post" action="/subscribe/send-otp">
+    <h1 class="h4 mb-2">Subscribe to Gaushala Updates</h1>
+    <p class="text-muted">Verify your mobile number to manage WhatsApp notification preferences.</p>
+    <div class="mb-3">
+      <label class="form-label">Mobile Number</label>
+      <input name="mobile" class="form-control" required autofocus>
+    </div>
+    <button class="btn btn-success w-100">Send OTP</button>
+  </form>
+</div>
+<%- include('../layout/footer') %>

@@ -1,0 +1,65 @@
+<%- include('../layout/header') %>
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h1 class="h3 mb-0">Dashboard</h1>
+    <div class="text-muted">Donation reminder and notification overview</div>
+  </div>
+  <a href="/members/create" class="btn btn-success">Add Member</a>
+</div>
+
+<div class="row g-3 mb-4">
+  <% const cards = [
+    ['Total Members', stats.totalMembers, 'bg-primary'],
+    ['Active Members', stats.activeMembers, 'bg-success'],
+    ['Upcoming Reminders', stats.upcomingReminders, 'bg-warning'],
+    ['Sent Today', stats.sentToday, 'bg-info'],
+    ['Failed Today', stats.failedToday, 'bg-danger']
+  ]; %>
+  <% cards.forEach(card => { %>
+    <div class="col-6 col-lg">
+      <div class="stat-card <%= card[2] %>">
+        <div><%= card[0] %></div>
+        <strong><%= card[1] %></strong>
+      </div>
+    </div>
+  <% }) %>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-7">
+    <div class="panel">
+      <h2 class="h5 mb-3">Recent Notifications</h2>
+      <div class="table-responsive">
+        <table class="table align-middle">
+          <thead><tr><th>Mobile</th><th>Status</th><th>Sent</th><th>Message</th></tr></thead>
+          <tbody>
+          <% recentNotifications.forEach(log => { %>
+            <tr>
+              <td><%= log.mobile %></td>
+              <td><span class="badge text-bg-<%= log.status === 'sent' ? 'success' : (log.status === 'failed' ? 'danger' : 'secondary') %>"><%= log.status %></span></td>
+              <td><%= log.sent_at ? log.sent_at.toLocaleString() : '-' %></td>
+              <td class="text-truncate" style="max-width: 260px;"><%= log.message %></td>
+            </tr>
+          <% }) %>
+          <% if (!recentNotifications.length) { %><tr><td colspan="4" class="text-muted">No notifications yet.</td></tr><% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-5">
+    <div class="panel">
+      <h2 class="h5 mb-3">Upcoming Reminders</h2>
+      <div class="list-group list-group-flush">
+        <% upcomingMembers.forEach(member => { %>
+          <a href="/members/<%= member.id %>" class="list-group-item list-group-item-action d-flex justify-content-between">
+            <span><%= member.name %><br><small class="text-muted"><%= member.mobile %></small></span>
+            <strong><%= member.next_reminder_date || '-' %></strong>
+          </a>
+        <% }) %>
+        <% if (!upcomingMembers.length) { %><div class="text-muted">No upcoming reminders.</div><% } %>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../layout/footer') %>

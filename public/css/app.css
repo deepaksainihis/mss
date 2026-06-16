@@ -1,0 +1,53 @@
+:root {
+  --page-bg: #f6f7f2;
+  --panel-border: #dde2d5;
+}
+
+body {
+  background: var(--page-bg);
+}
+
+.page-shell {
+  padding: 24px;
+}
+
+.panel,
+.auth-panel,
+.public-panel {
+  background: #fff;
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  padding: 22px;
+  box-shadow: 0 8px 28px rgba(25, 53, 36, 0.06);
+}
+
+.auth-wrap,
+.public-wrap {
+  min-height: calc(100vh - 48px);
+  display: grid;
+  place-items: center;
+}
+
+.auth-panel,
+.public-panel {
+  width: min(100%, 430px);
+}
+
+.stat-card {
+  color: #fff;
+  border-radius: 8px;
+  padding: 18px;
+  min-height: 108px;
+}
+
+.stat-card strong {
+  display: block;
+  font-size: 2rem;
+  line-height: 1.1;
+  margin-top: 8px;
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+}

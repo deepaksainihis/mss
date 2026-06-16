@@ -1,0 +1,78 @@
+<%- include('../layout/header') %>
+<h1 class="h3 mb-3">Notification Templates</h1>
+<div class="row g-4">
+  <div class="col-lg-5">
+    <form class="panel" method="post" action="/notifications/templates">
+      <h2 class="h5 mb-3">Create Template</h2>
+      <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input name="name" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Type</label>
+        <select name="type" class="form-select">
+          <option value="reminder">Reminder</option>
+          <option value="thank_you">Thank You</option>
+          <option value="general">General</option>
+          <option value="festival">Festival</option>
+          <option value="subscription_confirmation">Subscription Confirmation</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Message</label>
+        <textarea name="message" class="form-control" rows="7" required></textarea>
+        <div class="form-text">Placeholders: {{name}}, {{mobile}}, {{donation_amount}}, {{donation_frequency}}, {{next_reminder_date}}</div>
+      </div>
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" name="is_active" value="1" checked>
+        <label class="form-check-label">Active</label>
+      </div>
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" name="is_default_cron" value="1">
+        <label class="form-check-label">Default for cron reminders</label>
+      </div>
+      <button class="btn btn-success">Save Template</button>
+    </form>
+  </div>
+  <div class="col-lg-7">
+    <div class="panel">
+      <h2 class="h5 mb-3">Saved Templates</h2>
+      <div class="table-responsive">
+        <table class="table align-middle">
+          <thead><tr><th>Name</th><th>Type</th><th>Status</th><th>Default</th><th>Message</th><th></th></tr></thead>
+          <tbody>
+          <% templates.forEach(template => { %>
+            <tr>
+              <td><%= template.name %></td>
+              <td><%= template.type %></td>
+              <td><span class="badge text-bg-<%= template.is_active ? 'success' : 'secondary' %>"><%= template.is_active ? 'Active' : 'Inactive' %></span></td>
+              <td>
+                <% if (template.type === 'reminder' && template.is_default_cron) { %>
+                  <span class="badge text-bg-success">Cron</span>
+                <% } else if (template.type === 'reminder') { %>
+                  <form method="post" action="/notifications/templates/<%= template.id %>/default-cron">
+                    <button type="submit" class="btn btn-sm btn-outline-success">Set Default</button>
+                  </form>
+                <% } else { %>
+                  <span class="text-muted">-</span>
+                <% } %>
+              </td>
+              <td class="text-truncate" style="max-width: 260px;"><%= template.message %></td>
+              <td>
+                <div class="d-flex gap-2 justify-content-end">
+                <a class="btn btn-sm btn-outline-primary" href="/notifications/templates/<%= template.id %>/edit">Edit</a>
+                <form method="post" action="/notifications/templates/<%= template.id %>/delete">
+                  <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                </form>
+                </div>
+              </td>
+            </tr>
+          <% }) %>
+          <% if (!templates.length) { %><tr><td colspan="6" class="text-muted">No templates yet.</td></tr><% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../layout/footer') %>

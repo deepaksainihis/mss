@@ -1,0 +1,16 @@
+<%- include('../layout/header') %>
+<h1 class="h3 mb-3">Bulk Send</h1>
+<form class="panel" method="post" action="/notifications/bulk-send">
+  <div class="mb-3">
+    <label class="form-label">Template</label>
+    <select name="template_id" class="form-select" required>
+      <option value="">Select template</option>
+      <% templates.forEach(template => { %>
+        <option value="<%= template.id %>"><%= template.name %> (<%= template.type %>)</option>
+      <% }) %>
+    </select>
+  </div>
+  <p class="text-muted">This sends to all active members who are subscribed to WhatsApp notifications.</p>
+  <button class="btn btn-success">Send Bulk Notification</button>
+</form>
+<%- include('../layout/footer') %>
